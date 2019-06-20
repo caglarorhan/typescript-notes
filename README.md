@@ -38,27 +38,30 @@
 Interface in TS is to standardize function inputs. 
 
 Sample code:
-  interface NamedPerson {
-    firstName: string
-  }
+
+      interface NamedPerson {
+        firstName: string
+      }
+      
+      function greet(person:NamedPerson) {
+        console.log("Hello," +person.firstName);
+      }
+      
+      function changeName(person: NamedPerson) {
+        person.firstName = "Anna";
+      }
+      
+      const person = {
+        name: "Max",
+        age: 25
+      };
+      
+      greet(person);
+      changeName(person);
+      greet(person);
   
-  function greet(person:NamedPerson) {
-    console.log("Hello," +person.firstName);
-  }
+  // TS throws an error because interface guaranteed that input is as described. If not, on compile time error thrown. This is good to manage and standardize function inputs from one center.
   
-  function changeName(person: NamedPerson) {
-    person.firstName = "Anna";
-  }
-  
-  const person = {
-    name: "Max",
-    age: 25
-  };
-  
-  greet(person);
-  changeName(person);
-  greet(person);
-  
-  // TS throws an error because interface guaranteed that input is as described. I not on compile time an error rised. This is good to manage and standardize function inputs from one center.
+  > We should correct person objects name property to firstName to compile properly.
   
   
