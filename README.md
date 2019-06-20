@@ -94,5 +94,21 @@ If a class want to implement this interface:
 
 **Generics**
 
+    function genericFuncion<T>(data: T) {
+        return data;
+     }
+Generic functions tells TypeScript data will send with its type automatically or manually. This makes easy development while using this function.
+
+    genericFunction<number>("just a string"); // TS thows an error here. Because we declared data is number type.
+    // we should use number with <number> declaration
+
+as we use generics TS warn us while using properties of data we sent. ```genericFunction("`this is text").length``` will give us 12 as same if we use ``` genericFunction(23).length ``` we will get an error from TS compiler.
+
+**Built-in Generics**
+
+- Arrays ```const testResults: Array<number> = [12.4,45.6,23]``` we can't push string into that array
+
+ 
+
 
 
