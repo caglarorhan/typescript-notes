@@ -40,7 +40,10 @@ Interface in TS is to standardize function inputs.
 Sample code:
 
       interface NamedPerson {
-        firstName: string
+        firstName: string;
+        age?:number; // this question mark means age is optional
+        [anyPropertyName: string]: any; // if we dont know incoming property(parameter) name and we don't now type of the value of this property.
+        greet2(lastName: string)
       }
       
       function greet(person:NamedPerson) {
@@ -51,17 +54,45 @@ Sample code:
         person.firstName = "Anna";
       }
       
-      const person = {
+      const person: NamedPerson = {
         name: "Max",
-        age: 25
+        age: 25,
+        greet2(lastName: string){
+            console.log("Hi, I am "+ this.firstName +" "+ lastName);
+        }
       };
       
       greet(person);
       changeName(person);
       greet(person);
+      person.greet2("Doe");
   
   // TS throws an error because interface guaranteed that input is as described. If not, on compile time error thrown. This is good to manage and standardize function inputs from one center.
   
   > We should correct person objects name property to firstName to compile properly.
   
+  If we send object literal directly to function like:
   
+    greet({name:"Anna", age:34})
+    
+  TS behave more strictly on this.
+  We can add methods into interfaces. An interface could/should has all properties and methods function needs and also incoming argument/object has.
+  
+If a class want to implement this interface:
+
+    class Person implements NamedPerson {
+        firstName: string;
+        greet3( lastName: string){
+            console.log("Hi, I am "+ this.firstName +" "+ lastName);
+        }
+    }
+
+
+**IMPORTANT:** Interfaces itself doesn't get compiled. They are just used for compiling time checks for development . So you cant see interfaces in compiled js files. :)
+
+---
+
+**Generics**
+
+
+
