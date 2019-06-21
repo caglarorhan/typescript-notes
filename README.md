@@ -108,6 +108,44 @@ as we use generics TS warn us while using properties of data we sent. ```generic
 
 - Arrays ```const testResults: Array<number> = [12.4,45.6,23]``` we can't push string into that array
 
+**Arrays**
+
+    function printAll<T>(args: T[]) {
+    args.forEach( (element)=> console.log(element))
+    }
+    
+    printAll<string>(["Apple","Banana"]);
+    
+**Generic Types**    
+
+    const echo2: <T>(data: T) => T = betterEcho;
+Here is a generic type of function ``<T>(data: T) => T`` is type.
+
+**Generic Classes**
+
+    class SimpleMath<T> {
+        baseValue: T;
+        multiplyValue: T;
+        calculate():number {
+            return +this.baseValue * +this.multiplyValue;
+            }
+    }
+    
+after this setup you can use class as usual with more explicit.
+
+You can use Type of class with ``class SimpleMath<T extends number | string>``. By doing this  class can only be initiated with ``new SimpleMath<number>()`` or ``new SimpleMath<string>()`` . Without number and string type we've get an error (for example boolean).
+  
+We can describe a type with another character like ``U`` , so class will be 
+      
+      class SimpleMath<T extends number, U extends string, >() {
+          name: U      
+          baseValue: T;
+          multiplyValue: T;
+          calculate():number {
+              return +this.baseValue * +this.multiplyValue;
+              }
+      }      
+
  
 
 
