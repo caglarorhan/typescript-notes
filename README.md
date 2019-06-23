@@ -155,6 +155,72 @@ T is a kind of argument of generic class. All instantiations which typed like ``
 **Decorators**
 
 Decorators are functions.
-If a decorator attached to a class, it takes only one argument.
+If a decorator is going to be attached to a class, it will take only one argument.
 
+    function logged(constructorFn: Function) {
+        console.log(constructorFn);
+    }
+    
+    @logged
+    class Person {
+        constructor() {
+            console.log("Hi!")
+        }
+    
+    }
+The ``@`` sign gives a reference to class contructor. 
+
+This code prints on to the console like that:
+    
+    function Person() {
+        console.log("Hi!");
+    }
+    
+**Factory**
+
+ A decorator function which returns another function as a decorator.
+ 
+    function logged(constructionFn: Function) {
+        console.log(constructorFn)
+        }
+        
+     @logged
+     class Person {
+        constructor() {
+            console.log("Hi!")
+        }
+     }   
+ 
+    // Factory
+    function logging(value: boolean) {
+        return value ? logged : null;  
+    } 
+
+    @logging(true)
+    class Car{
+        
+    }
+
+**Method Decorator**
+ to edit or change a behavior of a method inside a class. These decorators works on method, not class.
+ 
+**Property Decorator**
+ 
+**Parameter Decorator**
+
+
+**JS Libraries with TypeScript**
+
+- Jquery 
+
+    - in our ts file we can use ``declare var $: any;`` . This allows to use included jquery file inside html. But this is the bad way. Because typescript doesn't know anything about library.
+  Instead of this, we are using declaration type script files with extension of ``.d.ts`` . These files automatically included compilation process by typescript. They are not compiled, they just used for tellinf TS to handle js libraries. You can find ready to use ``.d.ts`` files on the internet. 
+  TypeScripts read .d.ts files and learn how to use target js library.
+  
+  - Other alternative typings library
+  
+  - But more practical way is to install @types/jquery library with npm. And use jquery with any configuration needed.
+  You can install other js libraries with same method. After installation just ``import "jQuery";`` in your ``.ts`` file. 
+  
+   
 
