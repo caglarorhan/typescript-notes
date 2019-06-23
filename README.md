@@ -146,7 +146,15 @@ We can describe a type with another character like ``U`` , so class will be
               }
       }      
 
- 
+Usage is ``const simpleMath = new SimpleMath<string, number>();``
 
+**What this T letter means**
+T is a kind of argument of generic class. All instantiations which typed like ``new SimpleMath<TYPE>`` TYPE may be number, string, boolean etc., which type sent to the class, will be applied where T letter used.
+
+
+**Decorators**
+
+Decorators are functions.
+If a decorator attached to a class, it takes only one argument.
 
 
