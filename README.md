@@ -2,6 +2,12 @@
 
   Here will be first notes which i wrote by handwriting before. I will add them sooner.
   
+  **Some notes:**
+  
+  Javascript is Dynamically typed language. This means it has types, it is forgiving, great for web browser object model.
+  Typescript is a superset of javascript. TS is rigid and promotes stability and maintainability. TS gets these advantages to javascript and extend javascript.
+  
+  
   **ES6 in TypeScript**
   
   **Namespaces**
@@ -34,8 +40,8 @@
 - Explicit dependency declaration
 
 
-**Interfces**
-Interface in TS is to standardize function inputs. 
+**Interfaces**
+Interface in TS is to standardize function inputs. They defines a custom type, describes the data, and the behaviour of the object to interacts with others. Interfaces used in compile time. They can't show up in compiled js file.
 
 Sample code:
 
@@ -93,6 +99,7 @@ If a class want to implement this interface:
 ---
 
 **Generics**
+T and U generic names are used by convention. T is just the type of the parameter. And it is a kind of variable.
 
     function genericFuncion<T>(data: T) {
         return data;
@@ -103,6 +110,8 @@ Generic functions tells TypeScript data will send with its type automatically or
     // we should use number with <number> declaration
 
 as we use generics TS warn us while using properties of data we sent. ```genericFunction("`this is text").length``` will give us 12 as same if we use ``` genericFunction(23).length ``` we will get an error from TS compiler.
+
+We can use custom types with as like ``genericFunction<ACustomType>(data:ACustomType)``
 
 **Built-in Generics**
 
@@ -115,6 +124,10 @@ as we use generics TS warn us while using properties of data we sent. ```generic
     }
     
     printAll<string>(["Apple","Banana"]);
+    
+These two usages are identical:
+    var array: number[] = [1,2,3];
+    var array2: Array<number> = [1,2,3];    
     
 **Generic Types**    
 
@@ -149,7 +162,13 @@ We can describe a type with another character like ``U`` , so class will be
 Usage is ``const simpleMath = new SimpleMath<string, number>();``
 
 **What this T letter means**
-T is a kind of argument of generic class. All instantiations which typed like ``new SimpleMath<TYPE>`` TYPE may be number, string, boolean etc., which type sent to the class, will be applied where T letter used.
+T is a kind of argument of generic class. All instantiations which typed like ``new SimpleMath<TYPE>`` TYPE may be number, string, boolean. Date etc., which type sent to the class, will be applied where T letter used. You can use any letter or word combination. You can use multiple (usually developers use 1 or 2 but not limited) generic types.
+
+**Samples**
+    class KeyValuePair<TKey, TValue>{
+        public key: TKey,
+        public value: TValue
+    }
 
 
 **Decorators**
@@ -223,4 +242,8 @@ This code prints on to the console like that:
   You can install other js libraries with same method. After installation just ``import "jQuery";`` in your ``.ts`` file. 
   
    
-
+**TypeScript WorkFlows**
+ - Using tsc and tsconfig file
+ - Gulp workflow
+ - WebPack workflow
+ - 
