@@ -5,8 +5,77 @@
   **Some notes:**
   
   Javascript is Dynamically typed language. This means it has types, it is forgiving, great for web browser object model.
-  Typescript is a superset of javascript. TS is rigid and promotes stability and maintainability. TS gets these advantages to javascript and extend javascript.
+  Typescript is a superset of javascript. TS is rigid and promotes stability and maintainability. TS gets these advantages to javascript and extend javascript. Typescript checks errors on compiling time.
   
+To install type script use npm
+    
+    // to install
+    npm - install typescript
+    // to initialize
+    tcs --init 
+    // to watch changes and compile 
+    tsc -w
+    
+    
+
+Sample types:
+
+    let aracMarka : string    
+    let userAge : number 
+    let userPasif : boolean
+    let dersAdlari: any[] // array that elements are in any type 
+    let dersAdlari: string[] // array that elements are in string type 
+    let dersPuan: number[] // array that elements are in number type 
+    
+**Tuples**
+
+Tuples are list of vary types
+
+    let address :[string, number]   // there are in order
+
+    enum Color {Gray, Red, Blue, Maroon}
+    let myColor : Color = Color.Green // directly values used
+    console.log(myColor) // returns 1
+    
+**Note:** If any default value given to enum ``enum Color {Gray, Red=101, Blue, Maroon}`` next item takes sequential value. This means 
+
+     enum Color {Gray, Red=101, Blue, Maroon}
+        let myColor : Color = Color.Blue 
+        console.log(myColor) // returns 102
+
+**void type**
+
+Usually used on functions and means function doesn't return anything but can do some jobs.
+    
+    function sayHello():void {
+        console.log('Hello!')
+    }     
+
+**object type**
+
+    let userData: {name: string, age: number} = {name: "John", age: 23}
+
+**type alias**
+
+     type myTypes = {
+                    data: number[],
+                    output: (isValidName: boolean)=> number[]
+                    } 
+     
+     let myObject: myTypes =  {
+                               data: [3,8,2,12,9,67],
+                               output: function(all:boolean):number[]{
+                               return this.data;
+                               }                               
+                               }                        
+ 
+**union types**
+
+Using multiple types together as an option. Types separated with pipe (|).
+
+    let myValue: number | string = "John"; // no error
+    let myValue: number | string = 23; // no error
+
   
   **ES6 in TypeScript**
   
@@ -16,7 +85,7 @@
   
   **Modules**
   
-  *export default* -> if file imported with no referance but only path, all expoerted things imported
+  *export default* -> if file imported with no referance but only path, all exported things imported
   functions, classes and properties can be export
   
   
@@ -165,15 +234,27 @@ Usage is ``const simpleMath = new SimpleMath<string, number>();``
 T is a kind of argument of generic class. All instantiations which typed like ``new SimpleMath<TYPE>`` TYPE may be number, string, boolean. Date etc., which type sent to the class, will be applied where T letter used. You can use any letter or word combination. You can use multiple (usually developers use 1 or 2 but not limited) generic types.
 
 **Samples**
+
     class KeyValuePair<TKey, TValue>{
         public key: TKey,
         public value: TValue
     }
 
 
+> Sample with an explanation
+
+    function totalHeight(x: { length: number}, y: {length: number}): number {
+        let total: number = x.length + y.length;
+        return total;
+    }    
+    
+This function gets 2 parameters which each of them must be an object, which must have length property, which must be a number. And this function must return something, which must be a number.
+    
+
 **Decorators**
 
-Decorators are functions.
+In tsconfig.json file ``"experimentalDecorators": true`` should set.
+Decorators are functions with special signatures. Decorators can target classes, methods, properties and parameters.
 If a decorator is going to be attached to a class, it will take only one argument.
 
     function logged(constructorFn: Function) {
@@ -187,17 +268,28 @@ If a decorator is going to be attached to a class, it will take only one argumen
         }
     
     }
-The ``@`` sign gives a reference to class contructor. 
-
-This code prints on to the console like that:
+The ``@`` sign gives a reference to class constructor. 
+The ``constructorFn`` is the target, and it targets to the constructor of class which is ``Function`` above.
+The class's constructor function is ``function Person() { console.log("Hi!"")}`` so ``@logged`` logs to the console this.
+This code prints on to the console is:
     
     function Person() {
         console.log("Hi!");
     }
+
+> Multiple decorators can be added to the targets (classes, properties, methods or parameters)  
+
+    @ToDo
+    @Validate
+    @IsAlphaNumeric
+    @RegEx
+    class Person{
+    //...
+    }  
     
 **Factory**
 
- A decorator function which returns another function as a decorator.
+ A director function which returns another function as a decorator. 
  
     function logged(constructionFn: Function) {
         console.log(constructorFn)
@@ -221,6 +313,7 @@ This code prints on to the console like that:
     }
 
 **Method Decorator**
+
  to edit or change a behavior of a method inside a class. These decorators works on method, not class.
  
 **Property Decorator**
@@ -233,7 +326,7 @@ This code prints on to the console like that:
 - Jquery 
 
     - in our ts file we can use ``declare var $: any;`` . This allows to use included jquery file inside html. But this is the bad way. Because typescript doesn't know anything about library.
-  Instead of this, we are using declaration type script files with extension of ``.d.ts`` . These files automatically included compilation process by typescript. They are not compiled, they just used for tellinf TS to handle js libraries. You can find ready to use ``.d.ts`` files on the internet. 
+  Instead of this, we are using declaration type script files with extension of ``.d.ts`` . These files automatically included compilation process by typescript. They are not compiled, they just used for telling TS to handle js libraries. You can find ready to use ``.d.ts`` files on the internet. 
   TypeScripts read .d.ts files and learn how to use target js library.
   
   - Other alternative typings library
@@ -247,3 +340,14 @@ This code prints on to the console like that:
  - Gulp workflow
  - WebPack workflow
  - 
+
+**Source Maps**
+- tsconfig.json option ``"sourceMap : true"`` makes debug mode active in browser. Thus, we can debug ``.ts`` files directly from inside browser. Browser knows ehere the sourcemap file from at the bottom line of js file ``//sourceMappingURL=orijinalJSfile.js.map``
+SourceMap file matches ts file to js file line to line via line number.
+So there are 4 same named files with different extensions, 
+    - ``fileName.ts`` TS file
+    - ``fileName.d.ts`` Declaration files
+    - ``fileName.js.map`` Source Maps file
+    - ``fileName.js`` produced (compiled) js file
+
+
