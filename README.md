@@ -2,12 +2,14 @@
 
   Here will be first notes which i wrote by handwriting before. I will add them sooner.
   
-  **Some notes:**
+**Some notes:**
   
   Javascript is Dynamically typed language. This means it has types, it is forgiving, great for web browser object model.
-  Typescript is a superset of javascript. TS is rigid and promotes stability and maintainability. TS gets these advantages to javascript and extend javascript. Typescript checks errors on compiling time.
+  Typescript is a superset of javascript. TS is rigid and promotes stability and maintainability. TS gets these advantages to javascript and extend javascript. Typescript checks errors on compiling time. But this is not break/stops the compilation. /ts file compiled and js file produced.
+ 
+ 
   
-To install type script use npm
+To install type script with using npm:
     
     // to install
     npm - install typescript
@@ -16,6 +18,21 @@ To install type script use npm
     // to watch changes and compile 
     tsc -w
     
+we can compile multiple `.ts` files into one `.js` file.
+    
+    tsc --outfile targetJSFile.js firstTSFile.ts secondTSFile.ts lastTSFile.ts
+
+Also we can import other ts files into one main ts file, after that we only compile the main `.ts` file.
+
+At the main ts file
+    
+    /// <reference path="firstTSFile.ts"> 
+    /// <reference path="secondTSFile.ts">
+    main ts file codes here
+    
+after that import process we can compile ``mainTSFile.ts``
+
+    tsc mainTSFile.ts --outfile mainTSFile.js
     
 
 Sample types:
@@ -27,11 +44,18 @@ Sample types:
     let dersAdlari: string[] // array that elements are in string type 
     let dersPuan: number[] // array that elements are in number type 
     
-**Tuples**
+**tuple types**
 
 Tuples are list of vary types
 
     let address :[string, number]   // there are in order
+    let myAddress: address = "Oreon street"; //no error
+    let myAddress: address = 23; //no error
+    
+    
+
+
+**enum types**
 
     enum Color {Gray, Red, Blue, Maroon}
     let myColor : Color = Color.Green // directly values used
@@ -75,15 +99,50 @@ Using multiple types together as an option. Types separated with pipe (|).
 
     let myValue: number | string = "John"; // no error
     let myValue: number | string = 23; // no error
+    
+**never types**
+
+If a function will never return anything an never exit by default (may exit by a thrown error), and not expected so.
+    
+    function neverReturns(): never {
+        throw new Error('Error happens');
+    }
+**Nullable types**
+
+First we should activate this ``strictNullChecks: true`` from  ``tsconfig.json``      
+    this makes types only nullable if type is null. As same if type is not null (assigned as number for example) you can not assign null. If we use ``tuple`` or ``union`` so no error will be thrown.
+    
+    let myType: number = 23;
+    myTpe = null; // error
+    
+    let thatType: number | null = 23 ;
+    thatType = null; // no error
+    
+    
 
   
-  **ES6 in TypeScript**
+**ES6 in TypeScript**
   
-  **Namespaces**
+**Namespaces**
+Namespaces creates a space separated from global.
+    
+    namespace MyMaths{
+                       export function(){
+                                        } 
+                        }
+
+functions in namespaces should export, properties not. Every things in a namespace is special to it. Namespaces acting like objects.
+We can use namespaces inside other namespaces, but inner ones need to be exported with ``export`` keyword!
+
+While reaching namespaces properties etc. from outside we can use dot notation.
+
+    nameSpaceName1.nameSpaceName2.property
   
+If we want to use aliases for namespaces
+ 
+ ``import allNameSpaces = nameSpaceName1.nameSpaceName2``  
   
-  
-  **Modules**
+**Modules**
   
   *export default* -> if file imported with no referance but only path, all exported things imported
   functions, classes and properties can be export
@@ -94,6 +153,10 @@ Using multiple types together as an option. Types separated with pipe (|).
   - relative path, like: ``./path1/path2/filename``
   - absolute path, like: ``@path1/path2/filename`` // this points at node_modules folder by default
 
+Like ES6 do
+    
+    import {exportedName1,exportedName2,...exportedNameN } from "./source/source/fileName"
+    // above in paths .ts extension not required!
 
 **Namespaces vs. Modules**
 **Namespace**
@@ -108,6 +171,49 @@ Using multiple types together as an option. Types separated with pipe (|).
 - Module loader required
 - Explicit dependency declaration
 
+**Classes**
+
+There is no this keyword. Constructor is not necessarily.
+    
+    class Person{
+                Public | Private | Protected name: string
+                //OR
+                constructor (name:string) {
+                                           this.name= "John" 
+                                            }
+                }
+
+    Public   : Reached from every where, full access
+    Private  : Just reached from inside this object (class)
+    Protected: Reached from this object and its childs. Childs inherits everything
+    
+- **static**: Used for both property and methods of the classes. This keyword serves properties and methods to usage from outside without creating instances.  
+  
+- **abstract**: This keyword used with methods and classes. If used with classes these classes can not create instances. But can be extended to create new classes.
+If used with methods these methods can not include any property or submethods. Extended classes should have this method. I not error thrown.
+
+- **readonly**: Used with properties. We use this, if we want to read a property from outside but not to overwritten. 
+
+        public readonly name:string
+    
+**Singleton Class**
+
+The class that only have one instance at the same time.
+
+    class OnlyOne{
+        private static instance:OnlyOne;
+        provate constructor(public name: string){
+                                                }
+        static getInstance(){
+            if(!OnlyOne.instance){
+                                   OnlyOne.instance = new OnlyOne('thatOne'); 
+                                    }
+                                 return OnlyOne.instance   
+                             }                                        
+    }    
+    
+    let wrong = new OnlyOne("New the one"); // throws an error
+    let right = OnlyOne.getInstance(); // no error
 
 **Interfaces**
 Interface in TS is to standardize function inputs. They defines a custom type, describes the data, and the behaviour of the object to interacts with others. Interfaces used in compile time. They can't show up in compiled js file.
