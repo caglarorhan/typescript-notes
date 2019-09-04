@@ -33,6 +33,40 @@ At the main ts file
 after that import process we can compile ``mainTSFile.ts``
 
     tsc mainTSFile.ts --outfile mainTSFile.js
+ ---
+ ---
+ 
+ **Some headers form another course**
+ - Understand basic types in TS
+ - Function typing + annotations
+ - Type definition files
+ - Arrays in TS
+ - Modules systems
+ - Classes + Refresher on OOP
+ - Projects
+ ---
+ 
+ **Types in TypeScript**
+ - **Primitive Types**
+   - number
+   - boolean
+   - void
+   - undefined 
+   - string
+   - symbol
+   - null
+ - **ObjectTypes**
+   - functions 
+   - arrays
+   - classes 
+   - objects
+  
+**Type Annotations:** Developer tells TypeScript the type
+
+**Type Inference:** TypeScript guesses the type
+     
+---
+---
     
 
 Sample types:
@@ -457,3 +491,5 @@ So there are 4 same named files with different extensions,
     - ``fileName.js`` produced (compiled) js file
 
 
+**system.js**
+// system.js is old method for import-export things. We will cover this logic later. 
