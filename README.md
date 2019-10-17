@@ -64,12 +64,20 @@ after that import process we can compile ``mainTSFile.ts``
 **Type Annotations:** Developer tells TypeScript the type
 
 **Type Inference:** TypeScript guesses the type
+
+**PS:** If at the same sentence (row) we declare a variable (with let, const) and initialization (with '=') TS guess the type of the variable and at the compiling use this knowledge. This is called **Inference** . 
+Use Inference as much as you can.
+
+**Where to use Type Annotations:**
+ - When functions returns the _**any**_ type and we need to clarify the value.
+ - When we declare a variable on one line then initialize it later.
+ - When we want a variable to have a type that can't be inferred.
      
 ---
 ---
     
 
-Sample types:
+**Sample types:**
 
     let aracMarka : string    
     let userAge : number 
@@ -153,7 +161,35 @@ First we should activate this ``strictNullChecks: true`` from  ``tsconfig.json``
     thatType = null; // no error
     
     
+**Function types**
+ 
+    const myFunction: (i:number)=>void = (i:number)=>{
+    // some code
+    console.log('My number is' + i);
+    // return nothing
+    }
+    // in here, annotation says function expects an argument which type is number. And function returns nothing.
+   
+**PS:** between : and = signs is annotation. After = sign is function itself. 
 
+**Object Destructuring With Annotations**
+
+    const user = {
+        name: 'John',
+        age: 20,
+        coords: {
+                lat:0,
+                lng:0
+                },
+        setAge(age: number): void{
+                                    this.age= age;
+                                    }
+    }
+    
+    const {ageOfUser}:{age:number} = user; 
+    // ageOfUser is number
+    const {coordOfUser: {lat, lng}:{coords: {lat:number, lng:number}} = user; 
+    // coordOfUser is object, coordOfUser.lat is number, coordOfUser.lng is number
   
 **ES6 in TypeScript**
   
@@ -193,6 +229,7 @@ Like ES6 do
     // above in paths .ts extension not required!
 
 **Namespaces vs. Modules**
+
 **Namespace**
 - Organize application with JS Objects
 - Can be split up over multiple files
