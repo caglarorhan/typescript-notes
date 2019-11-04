@@ -88,13 +88,28 @@ Use Inference as much as you can.
     
 **tuple types**
 
-Tuples are list of vary types
+Tuples are list of vary types, for example write an object like this into tuple with TS:
+    
+    let address = {
+                    streetName: 'Oreon street',
+                    doorNumbre: 42,
+                    isHouse: true            
+                    }
 
-    let address :[string, number]   // there are in order
-    let myAddress: address = "Oreon street"; //no error
-    let myAddress: address = 23; //no error
+will be like:
+
+    let address :[string, number, boolean]   // there are in order
+    // updated structure is here below, instead of the writing above
+    // type alias 
+    type Address = [string, number, boolean]; // not creating an array, just type alias
     
-    
+  while using tuples:
+  
+    let myAddress: address = ["Oreon street", 42, true];
+    //or
+    let myAddress: [string, number, boolean] = ["Oreon street", 42, true];
+    //or with using type alias
+    let myAddress: Address =  ["Oreon street", 42, true];
 
 
 **enum types**
@@ -244,7 +259,7 @@ Like ES6 do
 
 **Classes**
 
-There is no this keyword. Constructor is not necessarily.
+There is no this keyword. Constructor is not necessarily. Properties of a class may called fields. While extending a class the extended class needs a super() call in its own constructor method.
     
     class Person{
                 Public | Private | Protected name: string
@@ -252,11 +267,17 @@ There is no this keyword. Constructor is not necessarily.
                 constructor (name:string) {
                                            this.name= "John" 
                                             }
+                aMethod():void{
+                                console.log('Something...');
+                                }                            
                 }
 
+    Modifiers
     Public   : Reached from every where, full access
     Private  : Just reached from inside this object (class)
     Protected: Reached from this object and its childs. Childs inherits everything
+    
+    extended classes can not overwrite  parent classes methods modifiers. They can still overwrite parent classeses methods. 
     
 - **static**: Used for both property and methods of the classes. This keyword serves properties and methods to usage from outside without creating instances.  
   
@@ -288,6 +309,7 @@ The class that only have one instance at the same time.
 
 **Interfaces**
 Interface in TS is to standardize function inputs. They defines a custom type, describes the data, and the behaviour of the object to interacts with others. Interfaces used in compile time. They can't show up in compiled js file.
+Interfaces are gatekeepers for generic functions parameters/arguments. This functions can accept any argument which can pass this interface filter.
 
 Sample code:
 
@@ -295,7 +317,7 @@ Sample code:
         firstName: string;
         age?:number; // this question mark means age is optional
         [anyPropertyName: string]: any; // if we dont know incoming property(parameter) name and we don't now type of the value of this property.
-        greet2(lastName: string)
+        greet2(lastName: string): void
       }
       
       function greet(person:NamedPerson) {
@@ -339,6 +361,7 @@ If a class want to implement this interface:
         }
     }
 
+in any ts file if we wish to use any interface from another ts file first import this interface than implement it on to a class like above.
 
 **IMPORTANT:** Interfaces itself doesn't get compiled. They are just used for compiling time checks for development . So you cant see interfaces in compiled js files. :)
 
@@ -372,8 +395,13 @@ We can use custom types with as like ``genericFunction<ACustomType>(data:ACustom
     printAll<string>(["Apple","Banana"]);
     
 These two usages are identical:
+ 
     var array: number[] = [1,2,3];
     var array2: Array<number> = [1,2,3];    
+    
+If we are using arrays in an array which includes strings: 
+
+    const parentArray: string[][] = [['ford', 'toyota','chevy']];    
     
 **Generic Types**    
 
