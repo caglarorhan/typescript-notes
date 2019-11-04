@@ -361,7 +361,7 @@ If a class want to implement this interface:
         }
     }
 
-in any ts file if we wish to use any interface from another ts file first import this interface than implement it on to a class like above.
+in any ts file if we wish to use any interface from another ts file first import this interface than implement it on to a class like above. This makes TS to help us to apply interface on the place.
 
 **IMPORTANT:** Interfaces itself doesn't get compiled. They are just used for compiling time checks for development . So you cant see interfaces in compiled js files. :)
 
@@ -558,3 +558,20 @@ So there are 4 same named files with different extensions,
 
 **system.js**
 // system.js is old method for import-export things. We will cover this logic later. 
+
+
+**TS config file**
+in our project directory at terminal 
+
+    tsc --init 
+
+creates a `tsconfig.json` file. In this file uncomment and change these two rows:
+
+      "outDir": "./build",/* Redirect output structure to the directory. */
+      "rootDir": "./src",/* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
+      
+this change makes tsc automatically search for source files (ts files) in rootDir (which is ./src in our example) and export js files into outDir (which is ./build in our example). After the update in terminal `tsc` command do this compilation for us.
+Additionally `tsc -w` (-w flag for watch) makes tsc watcher to any source file change in rootDir and compile it automatically.
+
+       
+          
