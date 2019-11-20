@@ -7,7 +7,9 @@
   Javascript is Dynamically typed language. This means it has types, it is forgiving, great for web browser object model.
   Typescript is a superset of javascript. TS is rigid and promotes stability and maintainability. TS gets these advantages to javascript and extend javascript. Typescript checks errors on compiling time. But this is not break/stops the compilation. /ts file compiled and js file produced.
  
- 
+ Whenever in ts, we need to use annotations etc. we need type definition files. Usually most known libraries has own type definition files to install.
+ You can install with `npm install @types/libraryName`.
+ For all Nodes standart libraries we need to use `npm install @types/node`.
   
 To install type script with using npm:
     
@@ -365,6 +367,7 @@ in any ts file if we wish to use any interface from another ts file first import
 
 **IMPORTANT:** Interfaces itself doesn't get compiled. They are just used for compiling time checks for development . So you cant see interfaces in compiled js files. :)
 
+**Interfaces VS Abstract Classess**
 ---
 
 **Generics**
@@ -561,7 +564,8 @@ So there are 4 same named files with different extensions,
 
 
 **TS config file**
-in our project directory at terminal 
+
+In our project directory at terminal 
 
     tsc --init 
 
@@ -573,5 +577,30 @@ creates a `tsconfig.json` file. In this file uncomment and change these two rows
 this change makes tsc automatically search for source files (ts files) in rootDir (which is ./src in our example) and export js files into outDir (which is ./build in our example). After the update in terminal `tsc` command do this compilation for us.
 Additionally `tsc -w` (-w flag for watch) makes tsc watcher to any source file change in rootDir and compile it automatically.
 
+--
+**Sample Project Initiation /w Commands**
+- mkdir "projectFolderName"
+- mkdir "build"
+- mkdir "src"
+- npm init -y
+- tsc --init
+- npm install nodemon concurrently
+- STEP: tsc configuration (tsconfig.json), change these lines.
+    - "outDir": './build' 
+    - "rootDir": './src'
+- STEP: package.json file changes
+    -   Change this scripts part
+    
+        
+    "scripts": {
+                "start:build": "tsc -w",
+                "start:run": "nodemon build/index.js",
+                "start" :"concurrently npm:start:*" 
+                }    
+    
        
-          
+ `start:build` command runs `tsc -w` with **w**atch mode    
+ `start:run` command runs `nodemon build/index.js` as a first starting point of project
+ `"start": "concurrently npm:start:*` runs all commands **concurrently** which starts with `start:*` (whatever after start:).    So tsc watching any change and compile if any, nodemon runs every time after compiling index.js, last start is doing this workflow concurrently.
+ 
+ - run "npm start" command, you may get an error message in first time because index.js is not created, run second time and see what index.ts compiled into index.js and run.
