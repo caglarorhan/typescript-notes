@@ -116,7 +116,7 @@ will be like:
 
 **enum types**
 
-    enum Color {Gray, Red, Blue, Maroon}
+    enum Color {Gray, Green, Red, Blue, Maroon}
     let myColor : Color = Color.Green // directly values used
     console.log(myColor) // returns 1
     
@@ -125,6 +125,7 @@ will be like:
      enum Color {Gray, Red=101, Blue, Maroon}
         let myColor : Color = Color.Blue 
         console.log(myColor) // returns 102
+Use  enum if all possible values are known. enum is a signal/note for other developers.
 
 **void type**
 
@@ -420,8 +421,11 @@ Here is a generic type of function ``<T>(data: T) => T`` is type.
             return +this.baseValue * +this.multiplyValue;
             }
     }
+    // usage is: 
+     const myMath = new SimpleMath<number>(); // T is number here!
     
-after this setup you can use class as usual with more explicit.
+    
+after this setup you can use class as usual with more explicit. T letter is optional we can give ant name which match the rules of variable naming.
 
 You can use Type of class with ``class SimpleMath<T extends number | string>``. By doing this  class can only be initiated with ``new SimpleMath<number>()`` or ``new SimpleMath<string>()`` . Without number and string type we've get an error (for example boolean).
   
@@ -577,7 +581,7 @@ creates a `tsconfig.json` file. In this file uncomment and change these two rows
 this change makes tsc automatically search for source files (ts files) in rootDir (which is ./src in our example) and export js files into outDir (which is ./build in our example). After the update in terminal `tsc` command do this compilation for us.
 Additionally `tsc -w` (-w flag for watch) makes tsc watcher to any source file change in rootDir and compile it automatically.
 
---
+
 **Sample Project Initiation /w Commands**
 - mkdir "projectFolderName"
 - mkdir "build"
@@ -604,3 +608,9 @@ Additionally `tsc -w` (-w flag for watch) makes tsc watcher to any source file c
  `"start": "concurrently npm:start:*` runs all commands **concurrently** which starts with `start:*` (whatever after start:).    So tsc watching any change and compile if any, nodemon runs every time after compiling index.js, last start is doing this workflow concurrently.
  
  - run "npm start" command, you may get an error message in first time because index.js is not created, run second time and see what index.ts compiled into index.js and run.
+
+
+**What is type assertion?**
+In TypeScript, type assertion is a way to tell the compiler what is the type of a variable. Type assertion is used when the type of the target variable might not be known or the programmer knows better what is the actual type of it.
+This makes a variables type to a type that only developer knows or creates which is not in default TS definitions. Usually new type is kind of Object like enum. But any type may be used. With enum,  saying to TS that variable will be one of this values.
+
